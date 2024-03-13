@@ -7,7 +7,7 @@ import compressor from "astro-compressor";
 // https://astro.build/config
 export default defineConfig({
   // https://docs.astro.build/en/guides/images/#authorizing-remote-images
-  site: 'https://screwfast.uk',
+  site: 'https://wediy.life',
   image: {
     domains: ["images.unsplash.com"],
   },
