@@ -30,7 +30,7 @@ export const footerLinks = [
 export const socialLinks = {
   facebook: "#",
   x: "#",
-  github: "https://github.com/mearashadowfax/ScrewFast",
+  github: "#",
   google: "#",
   slack: "#",
 };
