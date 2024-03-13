@@ -10,6 +10,7 @@ export default {
   },
   plugins: [
     require("preline/plugin"),
-    require("@tailwindcss/forms")
+    require("@tailwindcss/forms"),
+    require("tailwind-scrollbar")
   ],
 };

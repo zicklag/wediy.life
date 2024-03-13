@@ -19,7 +19,7 @@ interface Props {
 This is the main structure for the page.
 We set the language of the page to English and add classes for scrollbar and scroll behavior.
 -->
-<html lang="en" class="scrollbar-hide scroll-pt-16">
+<html lang="en" class="scroll-pt-16 scrollbar-thin scrollbar-thumb-yellow-500">
   <head>
     <!-- Adding metadata to the HTML document -->
     <Meta meta={meta} structuredData={structuredData} />
@@ -66,9 +66,9 @@ We set the language of the page to English and add classes for scrollbar and scr
     <FooterSection />
     <style>
       /* CSS rules for the page scrollbar and scrolling experience with lenis library */
-      .scrollbar-hide::-webkit-scrollbar {
+      /* .scrollbar-hide::-webkit-scrollbar {
         display: none;
-      }
+      } */
 
       .scrollbar-hide {
         -ms-overflow-style: none;
