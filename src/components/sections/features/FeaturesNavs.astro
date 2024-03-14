@@ -2,12 +2,12 @@
 // Import the necessary dependencies
 import TabNav from "../../ui/blocks/TabNav.astro";
 import TabContent from "../../ui/blocks/TabContent.astro";
-import construction from "../../../images/construction-image.avif";
+import airConditionerCompressor from "../../../images/ai-generated/stable-diffusion-xl--An_old_outdoor_air_conditioner_compressor_unit.png";
 import tools from "../../../images/automated-tools.avif";
 import dashboard from "../../../images/dashboard-image.avif";
 
 // Define the variable for the section's heading
-const title: string = `Customize <span class="text-yellow-500 dark:text-yellow-400">ScrewFast</span>'s offerings to perfectly suit your hardware and construction needs.`;
+const title: string = `Learning new things...Usually because something broke.`;
 ---
 
 <section
@@ -31,8 +31,8 @@ const title: string = `Customize <span class="text-yellow-500 dark:text-yellow-4
             id="tabs-with-card-item-1"
             dataTab="#tabs-with-card-1"
             aria="tabs-with-card-1"
-            heading="Cutting-Edge Tools"
-            content="Empower your projects with ScrewFast's cutting-edge tools. Experience enhanced efficiency in construction management with our sophisticated automated solutions."
+            heading="Air Conditioners"
+            content="Turns out, many air conditioner failures can easily be fixed yourself, for a fraction of the cost."
             first={true}
           >
             <svg
@@ -95,8 +95,8 @@ const title: string = `Customize <span class="text-yellow-500 dark:text-yellow-4
             <TabContent
               id="tabs-with-card-1"
               aria="tabs-with-card-item-1"
-              src={tools}
-              alt="Yellow and black heavy equipment on brown grass field"
+              src={airConditionerCompressor}
+              alt="StableDiffusion XL generated: An old outdoor air conditioner compressor unit"
               first={true}
             />
             <TabContent
@@ -109,7 +109,7 @@ const title: string = `Customize <span class="text-yellow-500 dark:text-yellow-4
             <TabContent
               id="tabs-with-card-3"
               aria="tabs-with-card-item-3"
-              src={construction}
+              src={tools}
               alt="Gray metal building frame near tower crane during daytime"
             />
           </div>
