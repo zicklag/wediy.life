@@ -1,89 +1,47 @@
 import { createDirectus, graphql } from '@directus/sdk';
 
-type Author = {
-  directus_users_id: {
-    display_name: string;
-    slug: string;
-  };
-};
-
-type ArticleTranslation = {
-  title: string;
-  body: string;
-  feature_image: {
-    id: string;
-  };
-  languages_id: {
-    code: string,
-  }
-};
-
-type Tag = {
-  id: string;
-  tags_id: {
-    slug: string;
-    translations: {
-      title: string;
-      languages_code: {
-        code: string;
-      };
-    }[];
-  };
-};
-
 type Article = {
   id: string;
+  title: string;
+  body: string;
   slug: string;
-  published_date: string;
-  authors: Author[];
-  tags: Tag[];
-  translations: ArticleTranslation[];
+  SequenceID: string;
+  date_created: string;
+  date_updated: string;
+  project_id: {
+    title: string;
+  };
+  excerpt?: string;
+  feature_image: string;
 };
 
 type Schema = {
   articles: Article[];
 };
 
-const directus = createDirectus<Schema>('https://directus.katharostech.com').with(graphql());
+const directus = createDirectus<Schema>('https://directus.wediy.life').with(graphql());
 
 export default directus;
 
 export async function getArticles() {
-  return await directus.query<{ articles: Article[] }>(`
+  const { wediylife_posts } = await directus.query<{ wediylife_posts: Article[] }>(
+    `
     query {
-  articles {
+	wediylife_posts {
     id
     slug
-    published_date
-    authors {
-    	directus_users_id {
-        display_name
-        slug
-      }
-    }
-    tags {
-      id
-      tags_id {
-        slug
-        translations {
-          title
-          languages_code {
-            code
-          }
-        }
-      }
-    }
-    translations {
+    SequenceID
+    date_created
+    date_updated
+    excerpt
+    project_id {
       title
-      body 
-      feature_image {
-        id
-      }
-      languages_id {
-        code
-      }
     }
+    title
+    body
+    feature_image
   }
-}   
-  `);
+}`
+  );
+  return wediylife_posts;
 }

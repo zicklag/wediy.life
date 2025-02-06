@@ -1,6 +1,6 @@
 import { z, defineCollection } from 'astro:content';
 import { marked } from 'marked';
-import { getArticles } from '~/lib/directus';
+import { getArticles } from '..//lib/directus.ts';
 
 const metadataDefinition = () =>
   z
@@ -49,20 +49,18 @@ const metadataDefinition = () =>
 
 const postCollection = defineCollection({
   loader: async () => {
-    const data = await getArticles();
-
-    return data.articles.map((x) => {
-      const findEnglish = (t: { languages_id: { code: string } }) => t.languages_id.code.startsWith('en');
-      const translation = x.translations.find(findEnglish)!;
+    const articles = await getArticles();
+    return articles.map((x) => {
       return {
         id: x.slug,
-        title: translation.title,
-        publishDate: new Date(x.published_date),
-        content: marked(translation.body),
-        tags: x.tags.map((tag) => tag.tags_id.slug),
-        image: translation.feature_image?.id
-          ? `https://directus.katharostech.com/assets/${translation.feature_image.id}`
-          : undefined,
+        title: x.title,
+        excerpt: x.excerpt,
+        category: x.project_id.title,
+        slug: x.slug,
+        publishDate: new Date(x.date_updated),
+        content: marked(x.body),
+        tags: [],
+        image: x.feature_image ? `https://directus.wediy.life/assets/${x.feature_image}` : undefined,
       };
     });
   },
