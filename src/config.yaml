@@ -1,6 +1,6 @@
 site:
-  name: KTech Studio
-  site: 'https://ktech.studio'
+  name: We DIY Life
+  site: 'https://wediy.life'
   base: '/'
   trailingSlash: false
 
@@ -9,14 +9,14 @@ site:
 # Default SEO metadata
 metadata:
   title:
-    default: KTech Studio
-    template: '%s — KTech Studio'
-  description: "Indie game development."
+    default: WeDIY.life
+    template: '%s — WeDIY.life'
+  description: "DIY project chronicles."
   robots:
     index: true
     follow: true
   openGraph:
-    site_name: KTech Studio
+    site_name: WeDIY.life
     images:
       - url: '~/assets/images/default.png'
         width: 1200
@@ -38,7 +38,7 @@ apps:
 
     post:
       isEnabled: true
-      permalink: '/%slug%' # Variables: %slug%, %year%, %month%, %day%, %hour%, %minute%, %second%, %category%
+      permalink: '/blog/%slug%' # Variables: %slug%, %year%, %month%, %day%, %hour%, %minute%, %second%, %category%
       robots:
         index: true
 
