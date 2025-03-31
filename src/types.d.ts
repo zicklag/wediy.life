@@ -16,6 +16,9 @@ export interface Post {
   /**  */
   updateDate?: Date;
 
+  /** */
+  EventDate: Date;
+
   /**  */
   title: string;
   /** Optional summary of post content. */

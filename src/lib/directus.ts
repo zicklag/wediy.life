@@ -5,7 +5,7 @@ type Article = {
   title: string;
   body: string;
   slug: string;
-  SequenceID: string;
+  EventDate: string;
   date_created: string;
   date_updated: string;
   project_id: {
@@ -30,7 +30,7 @@ export async function getArticles() {
 	wediylife_posts {
     id
     slug
-    SequenceID
+    EventDate
     date_created
     date_updated
     excerpt

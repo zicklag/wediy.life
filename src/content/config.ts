@@ -53,6 +53,7 @@ const postCollection = defineCollection({
     return articles.map((x) => {
       return {
         id: x.slug,
+        EventDate: new Date(x.EventDate),
         title: x.title,
         excerpt: x.excerpt,
         category: x.project_id.title,
@@ -71,6 +72,7 @@ const postCollection = defineCollection({
     updateDate: z.date().optional(),
     draft: z.boolean().optional(),
 
+    EventDate: z.date().optional(),
     title: z.string(),
     excerpt: z.string().optional(),
     image: z.string().optional(),
