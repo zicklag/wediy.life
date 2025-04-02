@@ -85,3 +85,37 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
     )
   }
 </form>
+
+<script>
+// Add event listener for form submission
+document.querySelector('form')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  // console.log('Form submitted with:', Object.fromEntries(formData));
+  const message = {
+    text: `New message from ${formData.get('name')}:${formData.get('email')} >> ${formData.get('message')}`, // Customize based on your inputs
+  };
+  const webhook = import.meta.env.PUBLIC_CONTACT_WEBHOOK;
+  // console.log(webhook)
+
+  // Call the webhook to chat
+  try {
+    const response = await fetch(webhook, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(message),
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+
+    // Handle success (e.g., show a success message)
+    console.log('Message sent successfully!');
+  } catch (error) {
+    console.error('Error sending message:', error);
+  }
+});
+</script>
