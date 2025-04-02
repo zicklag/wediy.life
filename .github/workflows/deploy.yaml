@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+  pull_request:
 
 jobs:
   # Build job
@@ -25,6 +26,7 @@ jobs:
 
   # Deployment job
   deploy:
+    if: github.event_name == 'push' && github.ref_name == 'main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
