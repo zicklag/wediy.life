@@ -112,10 +112,20 @@ document.querySelector('form')?.addEventListener('submit', async (e) => {
       throw new Error('Network response was not ok');
     }
 
-    // Handle success (e.g., show a success message)
-    console.log('Message sent successfully!');
+    window
+      .Toastify({
+        text: 'Message sent successfully',
+        style: { background: 'green' },
+      })
+      .showToast();
   } catch (error) {
     console.error('Error sending message:', error);
+    window
+      .Toastify({
+        text: 'Error sending message',
+        style: { background: 'red' },
+      })
+      .showToast();
   }
 });
 </script>

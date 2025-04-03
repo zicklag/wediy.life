@@ -36,6 +36,8 @@ const { language, textDirection } = I18N;
     <SiteVerification />
     <Analytics />
 
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+
     <!-- Comment the line below to disable View Transitions -->
     <ClientRouter fallback="swap" />
   </head>
@@ -44,5 +46,7 @@ const { language, textDirection } = I18N;
     <slot />
 
     <BasicScripts />
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   </body>
 </html>
