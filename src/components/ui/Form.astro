@@ -21,6 +21,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
                 type={type}
                 name={name}
                 id={name}
+                required="true"
                 autocomplete={autocomplete}
                 placeholder={placeholder}
                 class="py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
@@ -38,6 +39,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
         </label>
         <textarea
           id="textarea"
+          required="true"
           name={textarea.name ? textarea.name : 'message'}
           rows={textarea.rows ? textarea.rows : 4}
           placeholder={textarea.placeholder}
@@ -53,6 +55,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
         <div class="flex mt-0.5">
           <input
             id="disclaimer"
+            required="true"
             name="disclaimer"
             type="checkbox"
             class="cursor-pointer mt-1 py-3 px-4 block w-full text-md rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-900"
@@ -87,50 +90,50 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
 </form>
 
 <script>
-// Add event listener for form submission
-document.querySelector('form')?.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const formData = new FormData(e.target);
-  // console.log('Form submitted with:', Object.fromEntries(formData));
-  const message = {
-    text: `New message from ${formData.get('name')}:${formData.get('email')} >> ${formData.get('message')}`, // Customize based on your inputs
-  };
-  const webhook = import.meta.env.PUBLIC_CONTACT_WEBHOOK;
-  // console.log(webhook)
+  // Add event listener for form submission
+  document.querySelector('form')?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    // console.log('Form submitted with:', Object.fromEntries(formData));
+    const message = {
+      text: `New message from ${formData.get('name')}:${formData.get('email')} >> ${formData.get('message')}`, // Customize based on your inputs
+    };
+    const webhook = import.meta.env.PUBLIC_CONTACT_WEBHOOK;
+    // console.log(webhook)
 
-  // Call the webhook to chat
-  try {
-    const response = await fetch(webhook, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(message),
-    });
+    // Call the webhook to chat
+    try {
+      const response = await fetch(webhook, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(message),
+      });
 
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      window
+        .Toastify({
+          text: 'Message sent successfully',
+          style: { background: 'green' },
+        })
+        .showToast();
+
+      // Clear the form fields
+      document
+        .querySelectorAll('input,textarea')
+        .forEach((x: HTMLInputElement | HTMLTextAreaElement) => (x.value = ''));
+    } catch (error) {
+      console.error('Error sending message:', error);
+      window
+        .Toastify({
+          text: 'Error sending message',
+          style: { background: 'red' },
+        })
+        .showToast();
     }
-
-    window
-      .Toastify({
-        text: 'Message sent successfully',
-        style: { background: 'green' },
-      })
-      .showToast();
-
-    // Clear the form fields
-    document
-    .querySelectorAll('input,textarea')
-    .forEach((x: HTMLInputElement | HTMLTextAreaElement) => x.value = '')
-  } catch (error) {
-    console.error('Error sending message:', error);
-    window
-      .Toastify({
-        text: 'Error sending message',
-        style: { background: 'red' },
-      })
-      .showToast();
-  }
-});
+  });
 </script>
