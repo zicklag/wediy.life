@@ -17,10 +17,10 @@ jobs:
         with:
           deno-version: v2.x
       - run: deno install
-      - run: deno run build
       - name: Create env.production file
         if: github.event_name == 'push' && github.ref_name == 'main'
-        run: echo "PUBLIC_CONTACT_WEBHOOK=${{ secrets.CONTACT_WEBHOOK }}" > dist/.env.production  # Output secret to file
+        run: echo "PUBLIC_CONTACT_WEBHOOK=${{ secrets.CONTACT_WEBHOOK }}" > .env.production
+      - run: deno run build
       - name: Upload static files as artifact
         id: deployment
         uses: actions/upload-pages-artifact@v3
