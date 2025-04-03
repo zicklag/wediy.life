@@ -14,3 +14,5 @@ echo "PUBLIC_CONTACT_WEBHOOK=$CONTACT_WEBHOOK" >> .env.production
 # Install dependencies
 $deno install --allow-scripts
 $deno run build
+
+echo "./_worker.js" >> dist/.assetsignore
