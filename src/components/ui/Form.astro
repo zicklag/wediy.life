@@ -3,6 +3,8 @@ import type { Form as Props } from '~/types';
 import Button from '~/components/ui/Button.astro';
 
 const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } = Astro.props;
+
+const siteKey = import.meta.env.TURNSTILE_SITE_KEY || '3x00000000000000000000FF';
 ---
 
 <form>
@@ -72,7 +74,10 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
 
   {
     button && (
-      <div class="mt-10 grid">
+      <div class="grid">
+        <div class="checkbox my-3 mx-auto">
+          <div class="cf-turnstile" data-sitekey={siteKey} data-theme="dark" />
+        </div>
         <Button variant="primary" type="submit">
           {button}
         </Button>
@@ -89,26 +94,18 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
   }
 </form>
 
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></script>
 <script>
   // Add event listener for form submission
   document.querySelector('form')?.addEventListener('submit', async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    // console.log('Form submitted with:', Object.fromEntries(formData));
-    const message = {
-      text: `New message from ${formData.get('name')}:${formData.get('email')} >> ${formData.get('message')}`, // Customize based on your inputs
-    };
-    const webhook = import.meta.env.PUBLIC_CONTACT_WEBHOOK;
-    // console.log(webhook)
 
-    // Call the webhook to chat
+    // Call the contact webhook
     try {
-      const response = await fetch(webhook, {
+      const response = await fetch('https://wediy-life-contact.deno.dev/contact', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(message),
+        body: formData,
       });
 
       if (!response.ok) {
