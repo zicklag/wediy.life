@@ -3,6 +3,7 @@ import type { Form as Props } from '~/types';
 import Button from '~/components/ui/Button.astro';
 
 const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } = Astro.props;
+const TURNSTILE_SITE_KEY = import.meta.env.PUBLIC_TURNSTILE_SITEKEY;
 ---
 
 <form>
@@ -77,6 +78,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
           {button}
         </Button>
       </div>
+      <div class="cf-turnstile mt-10 grid" data-sitekey={TURNSTILE_SITE_KEY}></div>
     )
   }
 
@@ -89,6 +91,7 @@ const { inputs, textarea, disclaimer, button = 'Contact us', description = '' } 
   }
 </form>
 
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <script>
   // Add event listener for form submission
   document.querySelector('form')?.addEventListener('submit', async (e) => {
