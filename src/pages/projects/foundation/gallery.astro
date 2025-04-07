@@ -3,19 +3,17 @@ import Layout from '~/layouts/PageLayout.astro';
 
 import Hero from '~/components/widgets/Hero.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
-import BlogList from '~/components/blog/List.astro';
-import Headline from '~/components/blog/Headline.astro';
 
 // import Features2 from '~/components/widgets/Features2.astro';
 // import Features from '~/components/widgets/Features.astro';
-import Stats from '~/components/widgets/Stats.astro';
+// import Stats from '~/components/widgets/Stats.astro';
 import { getPermalink } from '~/utils/permalinks';
-import { fetchPosts } from '~/utils/blog';
+import { getGallery } from '~/lib/directus';
 // import Features3 from '~/components/widgets/Features3.astro';
 // import FAQs from '~/components/widgets/FAQs.astro';
 // import Brands from '~/components/widgets/Brands.astro';
 
-const posts = (await fetchPosts()).filter((x) => x.category?.slug == 'foundation');
+const gallery = await getGallery();
 
 const metadata = {
   title: 'Foundation Project',
@@ -26,10 +24,25 @@ const metadata = {
   <!-- Hero Widget ******************* -->
 
   <Hero tagline="Major Project">
-    <Fragment slot="title"> Fixing the Foundation </Fragment>
-
-    <Fragment slot="subtitle"> Remove the foam, dry the air, support the floor! </Fragment>
+    <Fragment slot="title"> Fixing the Foundation Gallery </Fragment>
   </Hero>
+
+  <div class="flex justify-center">
+    <div class="grid grid-cols-3 gap-4 max-w-screen-xl">
+      {
+        gallery
+          .filter((x) => x.media_type == 'video')
+          .map((x) => (
+            <div>
+              <h3 class="text-xl font-bold py-2 px-3 text-center">{x.item_name}</h3>
+              <video controls>
+                <source src={x.source_url} type="video/mp4" />
+              </video>
+            </div>
+          ))
+      }
+    </div>
+  </div>
 
   <!-- Features2 Widget ************** -->
   <!-- 
@@ -40,34 +53,6 @@ const metadata = {
   </Features2> -->
 
   <!-- Stats Widget ****************** -->
-
-  <section class="-mt-24">
-    <Stats
-      title="By the Numbers"
-      subtitle="What we've done so far"
-      stats={[
-        { title: 'Cost', amount: '$10k' },
-        { title: 'Concrete', amount: '4000 lbs' },
-        { title: 'Nails', amount: '1000' },
-        { title: 'Square Feet', amount: '750' },
-      ]}
-    />
-  </section>
-
-  <CallToAction
-    actions={[
-      {
-        variant: 'primary',
-        text: 'View Gallery',
-        href: getPermalink('/projects/foundation/gallery'),
-        // icon: 'tabler:download',
-      },
-    ]}
-  >
-    <Fragment slot="title">Media Gallery</Fragment>
-
-    <Fragment slot="subtitle"> Get an insiders look at the work we've been doing. </Fragment>
-  </CallToAction>
 
   <!-- Brands Widget ****************** -->
 
@@ -283,10 +268,10 @@ const metadata = {
     ]}
   /> -->
 
-  <section class="px-4 md:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
+  <!-- <section class="px-4 md:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
     <Headline>Updates</Headline>
     <BlogList posts={posts} />
-  </section>
+  </section> -->
 
   <!-- CallToAction Widget *********** -->
 
