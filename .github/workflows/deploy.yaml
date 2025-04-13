@@ -19,7 +19,8 @@ jobs:
       - run: deno install
       - name: Create env.production file
         if: github.event_name == 'push' && github.ref_name == 'main'
-        run: echo "TURNSTILE_SITE_KEY=${{ secrets.TURNSTILE_SITE_KEY }}" > .env.production
+        run: echo "TURNSTILE_SITE_KEY=${{ secrets.TURNSTILE_SITE_KEY }}" > .env.production && \
+          echo "PUBLIC_GFM_URL=${{ secrets.GFM_URL }}" >> .env.production
       - run: deno run build
       - name: Upload static files as artifact
         id: deployment

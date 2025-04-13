@@ -3,21 +3,36 @@ import Layout from '~/layouts/PageLayout.astro';
 import HeroText from '~/components/widgets/HeroText.astro';
 import ContactUs from '~/components/widgets/Contact.astro';
 // import Features2 from '~/components/widgets/Features2.astro';
+import CallToAction from '~/components/widgets/CallToAction.astro';
+import Note from '~/components/widgets/Note.astro';
 
 const metadata = {
   title: 'Support Us',
 };
+const gfm_link = import.meta.env.PUBLIC_GFM_URL
 ---
 
 <Layout metadata={metadata}>
   <!-- HeroText Widget ******************* -->
-
   <HeroText tagline="Support Us" title="We could use your help!" />
 
+  <CallToAction 
+    tagline="Donate To"
+    title="The Foundation Project"
+    actions={[
+      {
+        variant: 'primary',
+        text: 'GoFundMe',
+        href: gfm_link,
+        // icon: 'tabler:download',
+      },
+    ]}
+  />
+  <Note />
   <ContactUs
     id="form"
     title="Drop us a message today!"
-    subtitle="We don't know how we're taking support yet, lets talk!"
+    subtitle="Want to offer moral support, or any support really; Lets Talk!"
     inputs={[
       {
         type: 'text',
