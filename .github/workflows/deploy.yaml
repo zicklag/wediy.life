@@ -18,7 +18,7 @@ jobs:
           deno-version: v2.x
       - run: deno install
       - name: Create env.production file
-        if: github.event_name == 'push' && github.ref_name == 'main'
+        if: ( github.event_name == 'push' || github.event_name == 'workflow_dispatch' ) && github.ref_name == 'main'
         run: |
           echo "TURNSTILE_SITE_KEY=${{ secrets.TURNSTILE_SITE_KEY }}" >> .env.production
           echo "PUBLIC_GFM_URL=${{ secrets.GFM_URL }}" >> .env.production
