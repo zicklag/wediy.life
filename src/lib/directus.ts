@@ -33,41 +33,62 @@ export default directus;
 
 export async function getArticles() {
   const { wediylife_posts } = await directus.query<{ wediylife_posts: Article[] }>(
-    `
-    query {
-	wediylife_posts {
-    id
-    slug
-    EventDate
-    date_created
-    date_updated
-    excerpt
-    project_id {
-      title
-    }
-    title
-    body
-    feature_image
-  }
-}`
+    `query {
+      wediylife_posts {
+        id
+        slug
+        EventDate
+        date_created
+        date_updated
+        excerpt
+        project_id {
+          title
+        }
+        title
+        body
+        feature_image
+      }
+    }`
   );
   return wediylife_posts;
 }
 
 export async function getGallery() {
   const { wediylife_gallery } = await directus.query<{ wediylife_gallery: GalleryItem[] }>(
-    `
-    query {
-	wediylife_gallery {
-    id
-    project_id {
-      title
+    `query {
+	    wediylife_gallery {
+        id
+        project_id {
+          title
+        }
+        media_type 
+        source_url 
+        item_name
+      }
+    }`
+  );
+  return wediylife_gallery;
+}
+
+export async function getGalleryByProject(project_name: string) {
+  const { wediylife_gallery } = await directus.query<{ wediylife_gallery: GalleryItem[] }>(
+    `query($project_name: String) {
+      wediylife_gallery (
+        filter: { project_id: { title: { _eq: $project_name } } }
+      ) 
+      {
+        id
+        project_id {
+          title
+        }
+        media_type 
+        source_url 
+        item_name
+      }
+    }`,
+    {
+      project_name,
     }
-    media_type 
-    source_url 
-    item_name
-  }
-}`
   );
   return wediylife_gallery;
 }

@@ -13,17 +13,17 @@ import { getGalleryByProject } from '~/lib/directus';
 // import FAQs from '~/components/widgets/FAQs.astro';
 // import Brands from '~/components/widgets/Brands.astro';
 
-const gallery = await getGalleryByProject("Foundation");
+const gallery = await getGalleryByProject("Plumbing");
 
 const metadata = {
-  title: 'Foundation Project Media Gallery',
+  title: 'Plumbing Media Gallery',
 };
 ---
 
 <Layout metadata={metadata}>
   <!-- Hero Widget ******************* -->
 
-  <Hero tagline="Fixing the Foundation">
+  <Hero tagline="All Plumbing Projects">
     <Fragment slot="title"> Media Gallery </Fragment>
   </Hero>
 
