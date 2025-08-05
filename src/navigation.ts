@@ -17,6 +17,10 @@ export const headerData = {
           text: 'Foundation',
           href: getPermalink('/projects/foundation'),
         },
+        {
+          text: 'Plumbing',
+          href: getPermalink('/projects/plumbing'),
+        },
       ],
     },
     // {

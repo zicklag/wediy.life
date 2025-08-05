@@ -3,46 +3,45 @@ import Layout from '~/layouts/PageLayout.astro';
 
 import Hero from '~/components/widgets/Hero.astro';
 import CallToAction from '~/components/widgets/CallToAction.astro';
+import BlogList from '~/components/blog/List.astro';
+import Headline from '~/components/blog/Headline.astro';
 
 // import Features2 from '~/components/widgets/Features2.astro';
 // import Features from '~/components/widgets/Features.astro';
-// import Stats from '~/components/widgets/Stats.astro';
+import Stats from '~/components/widgets/Stats.astro';
 import { getPermalink } from '~/utils/permalinks';
-import { getGalleryByProject } from '~/lib/directus';
+import { fetchPosts } from '~/utils/blog';
 // import Features3 from '~/components/widgets/Features3.astro';
 // import FAQs from '~/components/widgets/FAQs.astro';
 // import Brands from '~/components/widgets/Brands.astro';
 
-const gallery = await getGalleryByProject("Foundation");
+const posts = (await fetchPosts()).filter((x) => x.category?.slug == 'plumbing');
 
 const metadata = {
-  title: 'Foundation Project Media Gallery',
+  title: 'Plumbing Projects',
 };
+// const gfm_link = import.meta.env.PUBLIC_GFM_URL
 ---
 
 <Layout metadata={metadata}>
   <!-- Hero Widget ******************* -->
 
-  <Hero tagline="Fixing the Foundation">
-    <Fragment slot="title"> Media Gallery </Fragment>
-  </Hero>
+  <Hero
+    tagline="Keeping the Flow Going"
+    title="Plumbing Projects"
+    subtitle="Explore our plumbing projects, from backflow preventers to the kitchen sink."
+    image={{
+      src: '~/assets/images/projectPagePlumbing.jpg',
+      height: 900,
+      width: 1000,
+      alt: 'Backflow Preventer',
+    }}
+  />
 
-  <div class="flex justify-center">
-    <div class="grid grid-cols-3 gap-4 max-w-screen-xl">
-      {
-        gallery
-          .filter((x) => x.media_type == 'video')
-          .map((x) => (
-            <div>
-              <h3 class="text-xl font-bold py-2 px-3 text-center">{x.item_name}</h3>
-              <video controls>
-                <source src={x.source_url} type="video/mp4" />
-              </video>
-            </div>
-          ))
-      }
-    </div>
-  </div>
+  <section class="px-4 md:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
+    <Headline>Articles</Headline>
+    <BlogList posts={posts} />
+  </section>
 
   <!-- Features2 Widget ************** -->
   <!-- 
@@ -53,6 +52,34 @@ const metadata = {
   </Features2> -->
 
   <!-- Stats Widget ****************** -->
+
+  <!-- <section class="-mt-24">
+    <Stats
+      title="By the Numbers"
+      subtitle="What we've done so far"
+      stats={[
+        { title: 'Cost', amount: '$10k' },
+        { title: 'Concrete', amount: '4000 lbs' },
+        { title: 'Nails', amount: '1000' },
+        { title: 'Square Feet', amount: '750' },
+      ]}
+    />
+  </section> -->
+
+  <CallToAction
+    actions={[
+      {
+        variant: 'primary',
+        text: 'View Gallery',
+        href: getPermalink('/projects/plumbing/gallery'),
+        // icon: 'tabler:download',
+      },
+    ]}
+  >
+    <Fragment slot="title">Media Gallery</Fragment>
+
+    <Fragment slot="subtitle"> All Plumbing video clips in one spot. </Fragment>
+  </CallToAction>
 
   <!-- Brands Widget ****************** -->
 
@@ -268,14 +295,9 @@ const metadata = {
     ]}
   /> -->
 
-  <!-- <section class="px-4 md:px-6 py-12 sm:py-16 lg:py-20 mx-auto max-w-4xl">
-    <Headline>Updates</Headline>
-    <BlogList posts={posts} />
-  </section> -->
-
   <!-- CallToAction Widget *********** -->
 
-  <CallToAction
+  <!-- <CallToAction
     actions={[
       {
         variant: 'primary',
@@ -288,5 +310,5 @@ const metadata = {
     <Fragment slot="title">Support Our Work!</Fragment>
 
     <Fragment slot="subtitle"> Want to help? See how you can contribute. </Fragment>
-  </CallToAction>
+  </CallToAction> -->
 </Layout>
